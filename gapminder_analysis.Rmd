@@ -10,7 +10,7 @@ We are working with the file combined_gapMinder.tsv.
 gap.in <- read.table("output//combined_gapMinder.tsv", header=T, sep="\t")
 
 #Load library
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 ```
 
 The countries in this file are:
@@ -23,22 +23,24 @@ levels(gap.in$country)
 gap.3 <- filter(gap.in, country %in% c("Brazil", "Guinea", "United States")) %>% droplevels()
 ```
 
-There are distinct trends in GDP over time in `r levels(gap.3$country)`. GDP increases in all three countries, but is sadly small in Guinea.
+There are distinct trends in GDP over time in `r levels(gap.3$country)`. GDP increases in all three countries, but is sadly small in Guinea. Guinea's GDP rate of increase greatly slowed after Lansana Conte came to power in the 1980s.
 ```{r GDP-plots, echo=FALSE}
 #Plot GDP as a function of year
-par(mfrow=c(1, 3))
+#par(mfrow=c(1, 3))
 with(filter(gap.3, country=="Brazil"), plot(year, gdpPercap, main="Brazil", xlab="Year", ylab="Per capita GDP", bty="n"))
 with(filter(gap.3, country=="Guinea"), plot(year, gdpPercap, main="Guinea", xlab="Year", ylab="Per capita GDP", bty="n"))
 with(filter(gap.3, country=="United States"), plot(year, gdpPercap, main="United States", xlab="Year", ylab="Per capita GDP", bty="n"))
 ```
 
-Now let's look at life expectancy by continent.
+Now let's look at life expectancy by continent. Poor Africa. Given that the maximum life expectancy for Africa is close to the maxima for other continents, I wonder to what degree the average is being lowered by small outliers.
 ```{r life-expect-cont, echo=FALSE}
 lives <- gap.in %>%
   group_by(continent) %>%
   summarise(mean_expectancy=mean(lifeExp), min_expectancy=min(lifeExp), max_expectancy=max(lifeExp))
 print(lives)
 ```
+
+
 
 Distribution of global life expectancy:
 
