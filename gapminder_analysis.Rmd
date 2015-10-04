@@ -1,0 +1,13 @@
+---
+title: "gapminder_analysis"
+author: "Elinor Lichtenberg"
+date: "10/4/2015"
+output: html_document
+---
+
+```{r setup, echo=F}
+#Get data & library
+gap.in <- read.table("output//combined_gapMinder.tsv", header=T, sep="\t")
+
+require(dplyr)
+```
