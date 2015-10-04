@@ -23,12 +23,19 @@ levels(gap.in$country)
 gap.3 <- filter(gap.in, country %in% c("Brazil", "Guinea", "United States")) %>% droplevels()
 ```
 
-There are distinct trends in GDP over time in `r levels(gap.3$country)`
+There are distinct trends in GDP over time in `r levels(gap.3$country)`. GDP increases in all three countries, but is sadly small in Guinea.
 ```{r GDP-plots, echo=FALSE}
 #Plot GDP as a function of year
 par(mfrow=c(1, 3))
-with(filter(gap.3, country=="Brazil"), plot(year, gdpPercap, main="", xlab="Year", ylab="Per capita GDP"))
-with(filter(gap.3, country=="Guinea"), plot(year, gdpPercap, main="Per Capita GDP for Three Countries", xlab="Year", ylab="Per capita GDP"))
-with(filter(gap.3, country=="United States"), plot(year, gdpPercap, main="", xlab="Year", ylab="Per capita GDP"))
+with(filter(gap.3, country=="Brazil"), plot(year, gdpPercap, main="Brazil", xlab="Year", ylab="Per capita GDP", bty="n"))
+with(filter(gap.3, country=="Guinea"), plot(year, gdpPercap, main="Guinea", xlab="Year", ylab="Per capita GDP", bty="n"))
+with(filter(gap.3, country=="United States"), plot(year, gdpPercap, main="United States", xlab="Year", ylab="Per capita GDP", bty="n"))
+```
 
+Now let's look at life expectancy by continent.
+```{r life-expectancy, echo=FALSE}
+lives <- gap.in %>%
+  group_by(continent) %>%
+  summarise(mean_expectancy=mean(lifeExp), min_expectancy=min(lifeExp), max_expectancy=max(lifeExp))
+print(lives)
 ```
