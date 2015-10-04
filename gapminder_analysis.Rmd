@@ -33,9 +33,19 @@ with(filter(gap.3, country=="United States"), plot(year, gdpPercap, main="United
 ```
 
 Now let's look at life expectancy by continent.
-```{r life-expectancy, echo=FALSE}
+```{r life-expect-cont, echo=FALSE}
 lives <- gap.in %>%
   group_by(continent) %>%
   summarise(mean_expectancy=mean(lifeExp), min_expectancy=min(lifeExp), max_expectancy=max(lifeExp))
 print(lives)
+```
+
+Distribution of global life expectancy:
+
+```{r life-expect-global, echo=FALSE}
+
+hist(gap.in$lifeExp, main="Default bins", xlab="Life expectancy (years)")
+default.breaks <- nclass.Sturges(gap.in$lifeExp)
+hist(gap.in$lifeExp, breaks=default.breaks*2, main="Narrower bins", xlab="Life expectancy (years)")
+
 ```
